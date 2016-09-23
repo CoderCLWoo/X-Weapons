@@ -50,4 +50,7 @@
 
 + (CGFloat)covertiPhone6SizeFromOldSize:(CGFloat)size;
 
+//设置扩展属性
++ (BOOL)addSkipBackupAttributeToItemAtURL:(NSURL *)URL;
+
 @end

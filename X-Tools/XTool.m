@@ -9,6 +9,10 @@
 #import "XTool.h"
 #import "UtilitiesMacro.h"
 #import "HZWebViewController.h"
+
+//设置扩展属性
+#include <sys/xattr.h>
+
 @implementation XTool
 
 +(void)openWebBrowser:(NSString *)url Controller:(UIViewController *)controller type:(NSString *)type{
@@ -345,4 +349,16 @@
     CGFloat nSize = newSize / oldSize * size;
     return nSize;
 }
+
+//设置扩展属性(移除文件的iCloud自动备份属性)
++ (BOOL)addSkipBackupAttributeToItemAtURL:(NSURL *)URL {
+    const char* filePath = [[URL path] fileSystemRepresentation];
+    
+    const char* attrName = "com.apple.MobileBackup";
+    u_int8_t attrValue = 1;
+    
+    int result = setxattr(filePath, attrName, &attrValue, sizeof(attrValue), 0, 0);
+    return result == 0;
+}
+
 @end
